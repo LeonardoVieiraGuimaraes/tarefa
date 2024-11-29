@@ -21,7 +21,7 @@ import java.time.Instant;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/token")
+@RequestMapping("/token")
 public class TokenController {
 
     private final JwtEncoder jwtEncoder;
