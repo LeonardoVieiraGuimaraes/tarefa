@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8080:8080"
+      - "8085:8085"
     environment:
       - SPRING_PROFILES_ACTIVE=prod
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/mydb
@@ -20,12 +20,12 @@ services:
       context: .
       dockerfile: Dockerfile.mysql
     ports:
-      - "3308:3306"
+      - "3306:3306"
     environment:
+      - MYSQL_ROOT_PASSWORD=123
+      - MYSQL_DATABASE=mydb
       - MYSQL_USER=admin
       - MYSQL_PASSWORD=123
-      - MYSQL_DATABASE=mydb
-      - MYSQL_ROOT_PASSWORD=123
     networks:
       - nginx-network
 

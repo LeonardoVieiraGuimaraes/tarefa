@@ -18,6 +18,9 @@ spring:
     init:
       mode: always
 
+server:
+  port: 8085
+
 jwt:
   public:
     key: classpath:app.pub
