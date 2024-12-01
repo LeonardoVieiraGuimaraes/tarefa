@@ -61,5 +61,5 @@ jobs:
           port: ${{ secrets.sftp_port }}
           script: |
             cd /root/Tarefa
-            docker-compose up -d --build
-            docker-compose restart
+            docker compose up -d --build
+            docker compose restart
