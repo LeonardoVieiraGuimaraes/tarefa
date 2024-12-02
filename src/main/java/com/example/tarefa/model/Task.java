@@ -1,5 +1,9 @@
 package com.example.tarefa.model;
 
+import java.time.Instant;
+
+import org.hibernate.annotations.CreationTimestamp;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,6 +20,17 @@ public class Task {
     private Long id;
     private String descricao;
     private boolean concluida = false; 
+
+    @CreationTimestamp
+    private Instant creationTimestamp;
+
+    public Instant getCreationTimestamp() {
+        return creationTimestamp;
+    }
+
+    public void setCreationTimestamp(Instant creationTimestamp) {
+        this.creationTimestamp = creationTimestamp;
+    }
 
     @ManyToOne
     @JoinColumn(name = "user_id")

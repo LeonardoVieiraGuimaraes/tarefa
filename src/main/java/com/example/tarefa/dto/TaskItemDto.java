@@ -1,4 +1,4 @@
 package com.example.tarefa.dto;
 
-public record TaskItemDto(long tweetId, String content, String username) {
+public record TaskItemDto(long id, String descricao, String username, Boolean concluida) {
 }
