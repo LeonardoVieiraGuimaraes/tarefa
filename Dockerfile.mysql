@@ -8,4 +8,4 @@ ENV MYSQL_DATABASE=mydb
 ENV MYSQL_ROOT_PASSWORD=123
 
 # Exponha a porta que o MySQL irá usar
-EXPOSE 3306
+EXPOSE 3308
