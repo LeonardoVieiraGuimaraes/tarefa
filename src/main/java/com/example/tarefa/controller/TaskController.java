@@ -1,6 +1,7 @@
 package com.example.tarefa.controller;
 
 import java.util.UUID;
+import java.util.NoSuchElementException;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -58,18 +59,23 @@ public class TaskController {
     @PostMapping
     public ResponseEntity<Void> createTweet(@RequestBody CreateTaskDto dto,
                                             JwtAuthenticationToken token) {
-        var user = userRepository.findById(UUID.fromString(token.getName()));
+        try {
+            var user = userRepository.findById(UUID.fromString(token.getName()))
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
 
-        var task = new Task();
-        task.setUser(user.get());
-        
-        task.setDescricao(dto.descricao());
-        // task.setConcluida(dto.concluida());
+            var task = new Task();
+            task.setUser(user);
+            task.setDescricao(dto.descricao());
+            // task.setConcluida(dto.concluida());
 
-        taskRepository.save(task);
+            taskRepository.save(task);
 
-        return ResponseEntity.ok().build();
-        
+            return ResponseEntity.ok().build();
+        } catch (NoSuchElementException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado", e);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro ao criar tarefa", e);
+        }
     }
 
     @DeleteMapping("/{id}")
