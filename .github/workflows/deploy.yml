@@ -60,6 +60,8 @@ jobs:
           key: ${{ secrets.sftp_private_key }}
           port: ${{ secrets.sftp_port }}
           script: |
+            docker compose down
+            docker system prune -af
             cd /root/Tarefa
             docker compose up -d --build
             docker compose restart
