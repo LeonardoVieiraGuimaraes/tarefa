@@ -9,3 +9,6 @@ ENV MYSQL_ROOT_PASSWORD=123
 
 # Exponha a porta que o MySQL irá usar
 EXPOSE 3308
+
+# Configure o MySQL para usar a porta 3308
+CMD ["mysqld", "--port=3308"]
