@@ -1,6 +1,2 @@
-FROM mysql
-ENV MYSQL_DATABASE=mydb
-ENV MYSQL_ROOT_PASSWORD=123
-ENV MYSQL_USER=admin    
-ENV MYSQL_PASSWORD=123
-EXPOSE 3306
+# Use a imagem base do MySQL
+FROM mysql:latest

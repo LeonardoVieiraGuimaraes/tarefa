@@ -27,8 +27,9 @@ jobs:
         run: |
           mkdir -p Tarefa
           cp -r target Tarefa/
-          cp docker-compose.yml Tarefa/
-          cp Dockerfile Tarefa/
+          cp docker-compose-app Tarefa/
+          cp docker-compose-mysql Tarefa/
+          cp Dockerfile.java Tarefa/
           cp Dockerfile.mysql Tarefa/
 
       - name: Delete existing files on server
@@ -61,5 +62,6 @@ jobs:
           port: ${{ secrets.sftp_port }}
           script: |
             cd /root/Tarefa
-            docker compose up -d --build
+            docker-compose -f docker-compose-mysql.yml up -d --build    
+            docker-compose -f docker-compose-app.yml up -d --build    
             docker compose restart

@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  app:
+    image: my-spring-boot-app
+    build:
+      context: .
+      dockerfile: Dockerfile.java
+    ports:
+      - "8085:8085"
+    expose:
+      - "3308"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+
+    networks:
+      - nginx-network
+
+networks:
+  nginx-network:
+    external: true
