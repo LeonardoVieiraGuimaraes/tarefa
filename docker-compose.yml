@@ -12,8 +12,10 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3308/mydb
       - SPRING_DATASOURCE_USERNAME=admin
       - SPRING_DATASOURCE_PASSWORD=123
+    depends_on:
+      - mysql
     networks:
-      - nginx-network
+      - app-network
 
   mysql:
     build:
@@ -27,8 +29,8 @@ services:
       - MYSQL_USER=admin
       - MYSQL_PASSWORD=123
     networks:
-      - nginx-network
+      - app-network
 
 networks:
-  nginx-network:
-    external: true
+  app-network:
+    driver: bridge
