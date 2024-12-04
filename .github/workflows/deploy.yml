@@ -27,8 +27,8 @@ jobs:
         run: |
           mkdir -p Tarefa
           cp -r target Tarefa/
-          cp docker-compose-app Tarefa/
-          cp docker-compose-mysql Tarefa/
+          cp docker-compose-app.yml Tarefa/
+          cp docker-compose-mysql.yml Tarefa/
           cp Dockerfile.java Tarefa/
           cp Dockerfile.mysql Tarefa/
 
