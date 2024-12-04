@@ -62,6 +62,6 @@ jobs:
           port: ${{ secrets.sftp_port }}
           script: |
             cd /root/Tarefa
-            docker-compose -f docker-compose-mysql.yml up -d --build    
-            docker-compose -f docker-compose-app.yml up -d --build    
+            docker compose -f docker-compose-mysql.yml up -d --build    
+            docker compose -f docker-compose-app.yml up -d --build    
             docker compose restart
