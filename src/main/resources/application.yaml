@@ -3,7 +3,7 @@ spring:
     name: tarefa
 
   datasource:
-    url: jdbc:mysql://mysql:3308/mydb
+    url: jdbc:mysql://mysql:3306/mydb
     username: admin
     password: 123
     driver-class-name: com.mysql.cj.jdbc.Driver
