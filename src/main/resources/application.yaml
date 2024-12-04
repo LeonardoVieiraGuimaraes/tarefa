@@ -3,9 +3,9 @@ spring:
     name: tarefa
 
   datasource:
-    url: jdbc:mysql://mysql:3306/mydb
-    username: admin
-    password: 123
+    url: jdbc:mysql://mysql:3308/mydb
+    username: user
+    password: password
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
@@ -22,9 +22,3 @@ spring:
 
 server:
   port: 8085
-
-jwt:
-  public:
-    key: classpath:app.pub
-  private:
-    key: classpath:app.key
