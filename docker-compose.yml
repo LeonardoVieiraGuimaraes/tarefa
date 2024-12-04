@@ -2,34 +2,26 @@ version: '3.8'
 
 services:
   app:
-    image: openjdk:23-jdk
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "8085:8085"
     environment:
-      - SPRING_PROFILES_ACTIVE=prod
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3308/mydb
-      - SPRING_DATASOURCE_USERNAME=admin
-      - SPRING_DATASOURCE_PASSWORD=123
-    volumes:
-      - ./target/my-spring-boot-app.jar:/app/my-spring-boot-app.jar
-    command: ["java", "-jar", "/app/my-spring-boot-app.jar"]
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/mydb
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: password
     depends_on:
       - mysql
-    networks:
-      - app-network
 
   mysql:
-    image: mysql
+    build:
+      context: .
+      dockerfile: Dockerfile.mysql
     ports:
-      - "3308:3306"
+      - "3306:3306"
     environment:
-      - MYSQL_USER=admin
-      - MYSQL_PASSWORD=123
-      - MYSQL_DATABASE=mydb
-      - MYSQL_ROOT_PASSWORD=123
-    networks:
-      - app-network
-
-networks:
-  app-network:
-    driver: bridge
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
