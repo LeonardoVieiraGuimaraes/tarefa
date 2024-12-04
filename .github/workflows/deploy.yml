@@ -28,8 +28,7 @@ jobs:
           mkdir -p Tarefa
           cp -r target Tarefa/
           cp docker-compose.yml Tarefa/
-          cp Dockerfile Tarefa/
-          cp Dockerfile.mysql Tarefa/
+          
 
       - name: Delete existing files on server
         uses: appleboy/ssh-action@v1.0.0
