@@ -28,7 +28,8 @@ jobs:
           mkdir -p Tarefa
           cp -r target Tarefa/
           cp docker-compose.yml Tarefa/
-          
+          # cp Dockerfile Tarefa/
+          # cp Dockerfile.mysql Tarefa/
 
       - name: Delete existing files on server
         uses: appleboy/ssh-action@v1.0.0
@@ -59,7 +60,8 @@ jobs:
           key: ${{ secrets.sftp_private_key }}
           port: ${{ secrets.sftp_port }}
           script: |
-            cd /root/Tarefa
             docker compose down
+            docker system prune -af
+            cd /root/Tarefa
             docker compose up -d --build
             docker compose restart
