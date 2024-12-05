@@ -25,7 +25,6 @@ import com.example.tarefa.model.User;
 import com.example.tarefa.repository.UserRepository;
 
 import java.time.Instant;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -68,12 +67,6 @@ public class TokenController {
         var now = Instant.now();
         var expiresIn = jwtExpirationInMs / 1000; // Expiração do token em segundos
 
-        // Verifique se o token atual ainda é válido
-        Optional<String> currentToken = getCurrentToken(user);
-        if (currentToken.isPresent() && isTokenValid(currentToken.get())) {
-            return ResponseEntity.ok(new LoginResponse(currentToken.get(), expiresIn));
-        }
-
         var scopes = user.getRoles()
                 .stream()
                 .map(Role::getName)
@@ -89,23 +82,6 @@ public class TokenController {
 
         var jwtValue = jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
 
-        // Armazene o novo token
-        storeToken(user, jwtValue);
-
         return ResponseEntity.ok(new LoginResponse(jwtValue, expiresIn));
-    }
-
-    private Optional<String> getCurrentToken(User user) {
-        // Implemente a lógica para obter o token atual do usuário
-        return Optional.empty();
-    }
-
-    private boolean isTokenValid(String token) {
-        // Implemente a lógica para verificar se o token é válido
-        return true;
-    }
-
-    private void storeToken(User user, String token) {
-        // Implemente a lógica para armazenar o novo token
     }
 }
