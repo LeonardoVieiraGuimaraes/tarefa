@@ -17,32 +17,33 @@ services:
     networks:
       - nginx-network
 
-    springboot:
-      build: 
-        context: .
-        dockerfile: Dockerfile.spring
-      container_name: springboot
-      environment:
-        SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/mydb
-        SPRING_DATASOURCE_USERNAME: admin
-        SPRING_DATASOURCE_PASSWORD: 123
-        SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
-        SPRING_JPA_HIBERNATE_DDL_AUTO: update
-        SPRING_JPA_SHOW_SQL: true
-        SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQLDialect
-        SPRING_SQL_INIT_MODE: always
-        SERVER_PORT: 8085
-        JWT_PUBLIC_KEY: "classpath:app.pub"  # Defina a variável de ambiente JWT_PUBLIC_KEY
-        JWT_PRIVATE_KEY: "classpath:app.key"  # Defina a variável de ambiente JWT_PRIVATE_KEY
-        SPRING_PROFILES_ACTIVE: prod  # Ativa o perfil de produção
-        LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_SECURITY: DEBUG  # Define o nível de log para depuração do Spring Security
-        
-      ports:
-        - "8085:8085"  # Mapeando a porta 8085 do host para a porta 8085 do contêiner
-      depends_on:
-        - mysql
-      networks:
-        - nginx-network
+  springboot:
+    build: 
+      context: .
+      dockerfile: Dockerfile.spring
+    container_name: springboot
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/mydb
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: 123
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_SHOW_SQL: true
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQLDialect
+      SPRING_SQL_INIT_MODE: always
+      SERVER_PORT: 8085
+      JWT_PUBLIC_KEY: "classpath:app.pub"  # Defina a variável de ambiente JWT_PUBLIC_KEY
+      JWT_PRIVATE_KEY: "classpath:app.key"  # Defina a variável de ambiente JWT_PRIVATE_KEY
+      SPRING_PROFILES_ACTIVE: prod  # Ativa o perfil de produção
+      LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_SECURITY: DEBUG  # Define o nível de log para depuração do Spring Security
+      SPRING_DATASOURCE_HIKARI_MAXIMUM_POOL_SIZE: 10  # Ajuste o pool de conexões do banco de dados
+      SPRING_DATASOURCE_HIKARI_MINIMUM_IDLE: 5  # Ajuste o pool de conexões do banco de dados
+    ports:
+      - "8085:8085"  # Mapeando a porta 8085 do host para a porta 8085 do contêiner
+    depends_on:
+      - mysql
+    networks:
+      - nginx-network
 
 networks:
   nginx-network:
