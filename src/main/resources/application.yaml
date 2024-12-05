@@ -1,27 +1,27 @@
 spring:
-  application:
-    name: tarefa
-
   datasource:
-    url: jdbc:mysql://${MYSQL_HOST:localhost}:3308/mydb
-    username: admin
-    password: 123
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    driver-class-name: ${SPRING_DATASOURCE_DRIVER_CLASS_NAME}
 
   jpa:
-    show-sql: true
+    show-sql: ${SPRING_JPA_SHOW_SQL}
     hibernate:
-      ddl-auto: update
+      ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO}
+    properties:
+      hibernate.dialect: ${SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT}
     defer-datasource-initialization: true
 
   sql:
     init:
-      mode: always
+      mode: ${SPRING_SQL_INIT_MODE}
+
 server:
-  port: 8085
+  port: ${SERVER_PORT}
 
 jwt:
   public:
-    key: classpath:app.pub
+    key: ${JWT_PUBLIC_KEY}
   private:
-    key: classpath:app.key
+    key: ${JWT_PRIVATE_KEY}

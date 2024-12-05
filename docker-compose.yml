@@ -1,0 +1,47 @@
+version: '3.8'
+services:
+  mysql:
+    build: 
+      context: .
+      dockerfile: Dockerfile.mysql
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: 123
+    ports:
+      - "3308:3306"  # Mapeando a porta 3308 do host para a porta 3306 do contêiner
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - nginx-network
+
+  springboot:
+    build: 
+      context: .
+      dockerfile: Dockerfile.spring
+    container_name: springboot
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/mydb
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: 123
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_SHOW_SQL: true
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQLDialect
+      SPRING_SQL_INIT_MODE: always
+      SERVER_PORT: 8085
+    ports:
+      - "8085:8085"  # Mapeando a porta 8085 do host para a porta 8085 do contêiner
+    depends_on:
+      - mysql
+    networks:
+      - nginx-network
+
+networks:
+  nginx-network:
+    external: true
+
+volumes:
+  mysql-data:

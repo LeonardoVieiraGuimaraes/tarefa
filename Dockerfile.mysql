@@ -1,2 +1,14 @@
-# Use a imagem base do MySQL
+# Use a imagem base do MySQL (última versão)
 FROM mysql:latest
+
+# Defina variáveis de ambiente para configuração do MySQL
+ENV MYSQL_ROOT_PASSWORD=root
+ENV MYSQL_DATABASE=mydb
+ENV MYSQL_USER=admin
+ENV MYSQL_PASSWORD=123
+
+# Exponha a porta 3306
+EXPOSE 3306
+
+# Defina o volume para persistência de dados
+VOLUME /var/lib/mysql
