@@ -34,16 +34,15 @@ public class SecurityConfig {
     @Value("${jwt.private.key}")
     private RSAPrivateKey privateKey;
 
-        @Bean
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     
         http
             .authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/hello").permitAll() // Permite acesso público ao endpoint /hello
-                .requestMatchers(HttpMethod.POST, "/users").permitAll() // Permite acesso público ao endpoint /users para requisições POST
                 .requestMatchers(HttpMethod.POST, "/login").permitAll() // Permite acesso público ao endpoint /login para requisições POST
-                .requestMatchers(HttpMethod.POST, "/tasks/**").authenticated() // Permite acesso ao endpoint /tasks e suas subpastas para qualquer usuário autenticado
                 .requestMatchers("/tasks/**").authenticated() // Permite acesso ao endpoint /tasks e suas subpastas para qualquer usuário autenticado
+                .requestMatchers(HttpMethod.POST, "/users").authenticated() // Requer autenticação para requisições POST ao endpoint /users
                 .anyRequest().authenticated()) // Requer autenticação para qualquer outra requisição
             .csrf(csrf -> csrf.disable()) // Desabilita a proteção CSRF
             .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
@@ -51,12 +50,11 @@ public class SecurityConfig {
     
         return http.build();
     }
-
+    
     @Bean
     public JwtDecoder jwtDecoder() {
         return NimbusJwtDecoder.withPublicKey(publicKey).build();
     }
-
     @Bean
     public JwtEncoder jwtEncoder() {
         JWK jwk = new RSAKey.Builder(this.publicKey).privateKey(privateKey).build();

@@ -57,7 +57,7 @@ public class TaskController {
 
 
     @PostMapping
-    public ResponseEntity<Void> createTask(@RequestBody CreateTaskDto dto,
+    public ResponseEntity<Void> createTweet(@RequestBody CreateTaskDto dto,
                                             JwtAuthenticationToken token) {
         try {
             var user = userRepository.findById(UUID.fromString(token.getName()))
@@ -66,18 +66,20 @@ public class TaskController {
             var task = new Task();
             task.setUser(user);
             task.setDescricao(dto.descricao());
-            task.setConcluida(dto.concluida());
+            // task.setConcluida(dto.concluida());
 
             taskRepository.save(task);
 
-            return ResponseEntity.status(HttpStatus.CREATED).build();
+            return ResponseEntity.ok().build();
+        } catch (NoSuchElementException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado", e);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro ao criar tarefa", e);
         }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTask(@PathVariable("id") Long taskId,
+    public ResponseEntity<Void> deleteTweet(@PathVariable("id") Long taskId,
                                             JwtAuthenticationToken token) {
         var user = userRepository.findById(UUID.fromString(token.getName()));
         var task = taskRepository.findById(taskId)
