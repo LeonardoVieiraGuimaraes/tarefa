@@ -25,3 +25,4 @@ jwt:
     key: ${JWT_PUBLIC_KEY}
   private:
     key: ${JWT_PRIVATE_KEY}
+  expiration: ${JWT_EXPIRATION}  # Adicionando a configuração de expiração do JWT
