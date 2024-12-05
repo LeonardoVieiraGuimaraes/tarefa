@@ -1,6 +1,7 @@
 package com.example.tarefa.controller;
 
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -28,6 +29,8 @@ public class TokenController {
     private final UserRepository userRepository;
     private BCryptPasswordEncoder passwordEncoder;
 
+    @Value("${jwt.expiration}")
+    private long jwtExpirationInMs;
     public TokenController(JwtEncoder jwtEncoder,
                            UserRepository userRepository,
                            BCryptPasswordEncoder passwordEncoder) {
@@ -46,7 +49,7 @@ public class TokenController {
         }
 
         var now = Instant.now();
-        var expiresIn = 300L;
+        var expiresIn = jwtExpirationInMs / 1000;
 
         var scopes = user.get().getRoles()
                 .stream()
