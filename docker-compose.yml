@@ -32,6 +32,8 @@ services:
       SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQLDialect
       SPRING_SQL_INIT_MODE: always
       SERVER_PORT: 8085
+      JWT_PUBLIC_KEY: "classpath:app.pub"  # Defina a variável de ambiente JWT_PUBLIC_KEY
+      JWT_PRIVATE_KEY: "classpath:app.key"  # Defina a variável de ambiente JWT_PRIVATE_KEY
     ports:
       - "8085:8085"  # Mapeando a porta 8085 do host para a porta 8085 do contêiner
     depends_on:
