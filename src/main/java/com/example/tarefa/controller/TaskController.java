@@ -66,13 +66,11 @@ public class TaskController {
             var task = new Task();
             task.setUser(user);
             task.setDescricao(dto.descricao());
-            // task.setConcluida(dto.concluida());
+            task.setConcluida(dto.concluida());
 
             taskRepository.save(task);
 
-            return ResponseEntity.ok().build();
-        } catch (NoSuchElementException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado", e);
+            return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro ao criar tarefa", e);
         }
