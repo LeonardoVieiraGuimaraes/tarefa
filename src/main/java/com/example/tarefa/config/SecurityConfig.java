@@ -41,7 +41,6 @@ public class SecurityConfig {
             .authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/hello").permitAll() // Permite acesso público ao endpoint /hello
                 .requestMatchers(HttpMethod.POST, "/login").permitAll() // Permite acesso público ao endpoint /login para requisições POST
-                .requestMatchers("/tasks/**").authenticated() // Permite acesso ao endpoint /tasks e suas subpastas para qualquer usuário autenticado
                 .requestMatchers(HttpMethod.POST, "/users").authenticated() // Requer autenticação para requisições POST ao endpoint /users
                 .anyRequest().authenticated()) // Requer autenticação para qualquer outra requisição
             .csrf(csrf -> csrf.disable()) // Desabilita a proteção CSRF
