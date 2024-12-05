@@ -34,19 +34,20 @@ public class SecurityConfig {
     @Value("${jwt.private.key}")
     private RSAPrivateKey privateKey;
 
-    @Bean
+        @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
+    
         http
-                .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/hello").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/users").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/login").permitAll()
-                        .anyRequest().authenticated())
-                .csrf(csrf -> csrf.disable())
-                .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-
+            .authorizeHttpRequests(authorize -> authorize
+                .requestMatchers("/hello").permitAll() // Permite acesso público ao endpoint /hello
+                .requestMatchers(HttpMethod.POST, "/users").permitAll() // Permite acesso público ao endpoint /users para requisições POST
+                .requestMatchers(HttpMethod.POST, "/login").permitAll() // Permite acesso público ao endpoint /login para requisições POST
+                .requestMatchers("/tasks/**").authenticated() // Permite acesso ao endpoint /tasks e suas subpastas para qualquer usuário autenticado
+                .anyRequest().authenticated()) // Requer autenticação para qualquer outra requisição
+            .csrf(csrf -> csrf.disable()) // Desabilita a proteção CSRF
+            .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+    
         return http.build();
     }
 

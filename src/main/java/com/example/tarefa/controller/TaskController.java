@@ -57,7 +57,7 @@ public class TaskController {
 
 
     @PostMapping
-    public ResponseEntity<Void> createTweet(@RequestBody CreateTaskDto dto,
+    public ResponseEntity<Void> createTask(@RequestBody CreateTaskDto dto,
                                             JwtAuthenticationToken token) {
         try {
             var user = userRepository.findById(UUID.fromString(token.getName()))
@@ -79,7 +79,7 @@ public class TaskController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTweet(@PathVariable("id") Long taskId,
+    public ResponseEntity<Void> deleteTask(@PathVariable("id") Long taskId,
                                             JwtAuthenticationToken token) {
         var user = userRepository.findById(UUID.fromString(token.getName()));
         var task = taskRepository.findById(taskId)
