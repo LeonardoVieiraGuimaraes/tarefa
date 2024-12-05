@@ -38,6 +38,7 @@ services:
       LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_SECURITY: DEBUG  # Define o nível de log para depuração do Spring Security
       SPRING_DATASOURCE_HIKARI_MAXIMUM_POOL_SIZE: 10  # Ajuste o pool de conexões do banco de dados
       SPRING_DATASOURCE_HIKARI_MINIMUM_IDLE: 5  # Ajuste o pool de conexões do banco de dados
+      JWT_EXPIRATION: 86400000  # Expiração do token JWT em milissegundos (1 dia)
     ports:
       - "8085:8085"  # Mapeando a porta 8085 do host para a porta 8085 do contêiner
     depends_on:
